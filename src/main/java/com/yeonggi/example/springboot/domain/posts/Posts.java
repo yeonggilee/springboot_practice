@@ -31,6 +31,10 @@ public class Posts {
         this.author = author;
     }
 
+    public void update(String title, String content) { //Dirty Checking (영속성 컨텍스트)
+        this.title = title;
+        this.content = content;
+    }
 }
 /*
 1.@Entity
