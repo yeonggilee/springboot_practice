@@ -1,5 +1,6 @@
 package com.yeonggi.example.springboot.domain.posts;
 
+import com.yeonggi.example.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter //lombok //6.
 @NoArgsConstructor //lombok //5.
 @Entity //JPA - must //1.
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id //2.
     @GeneratedValue(strategy = GenerationType.IDENTITY) //3.
