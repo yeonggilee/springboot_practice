@@ -30,6 +30,7 @@ dependencies {
     implementation('org.projectlombok:lombok') //Getter, Setter, 기본생성자, toString 등을 어노테이션으로 자동생성
     implementation('org.springframework.boot:spring-boot-starter-data-jpa') //1.
     implementation('com.h2database:h2') //2.
+    implementation('org.springframework.boot:spring-boot-starter-mustache')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 /*
