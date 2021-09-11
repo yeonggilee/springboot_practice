@@ -2,12 +2,16 @@ package com.yeonggi.example.springboot.service.posts;
 
 import com.yeonggi.example.springboot.domain.posts.Posts;
 import com.yeonggi.example.springboot.domain.posts.PostsRepository;
+import com.yeonggi.example.springboot.web.dto.PostsListResponseDto;
 import com.yeonggi.example.springboot.web.dto.PostsResponseDto;
 import com.yeonggi.example.springboot.web.dto.PostsSaveRequestDto;
 import com.yeonggi.example.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -38,5 +42,12 @@ public class PostsService {
         );
 
         return new PostsResponseDto(entity);
+    }
+
+    @Transactional(readOnly = true) //조회속도 개선
+    public List<PostsListResponseDto> findAllDesc(){
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new) //.map(posts -> new PostsListResponseDto(posts))
+                .collect(Collectors.toList()); //stream -> map -> list
     }
 }
