@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-/*@Setter -> @Builder*/
+/*@Setter -> public method*/
 @Getter //lombok //6.
 @NoArgsConstructor //lombok //5.
 @Entity //JPA - must //1.
