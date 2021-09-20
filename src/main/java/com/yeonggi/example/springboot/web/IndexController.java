@@ -1,5 +1,6 @@
 package com.yeonggi.example.springboot.web;
 
+import com.yeonggi.example.springboot.config.auth.LoginUser;
 import com.yeonggi.example.springboot.config.auth.dto.SessionUser;
 import com.yeonggi.example.springboot.service.posts.PostsService;
 import com.yeonggi.example.springboot.web.dto.PostsResponseDto;
@@ -19,10 +20,10 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model){ //1.
+    public String index(Model model, @LoginUser SessionUser user){ //1. //4.
         model.addAttribute("posts", postsService.findAllDesc());
 
-        SessionUser user = (SessionUser) httpSession.getAttribute("user"); //2.
+        //SessionUser user = (SessionUser) httpSession.getAttribute("user"); //2.
         if(user != null){ //3.
             model.addAttribute("userName", user.getName());
         }
@@ -52,4 +53,7 @@ public class IndexController {
 - 즉, 로그인 성공 시 httpSession.getAttribute("user")에서 값을 가져올 수 있습니다.
 3.if(user != null)
 - 세션에 저장된 값이 있을 때만 model에 userName으로 등록합니다.
-- 세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이니 로그인 버튼이 보이게 됩니다.*/
+- 세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이니 로그인 버튼이 보이게 됩니다.
+4.@LoginUser SessionUser user
+- 기존에 httpSession.getAttribute("user")로 가져오던 세션 정보 값이 개선되었습니다.
+- 이제는 어느 컨트롤러든지 @LoginUser만 사용하면 세션 정보를 가져올 수 있게 되었습니다.*/
