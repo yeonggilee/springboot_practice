@@ -1,9 +1,13 @@
 package com.yeonggi.example.springboot.web;
 
+import com.yeonggi.example.springboot.config.auth.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -12,12 +16,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class) //1.
-@WebMvcTest(controllers = HelloController.class) //2.
+@WebMvcTest(controllers = HelloController.class, //@WebMvcTest의 secure 옵션은 2.1부터 Deprecated 됨
+        excludeFilters = { //스캔 대상에서 SecurityConfig 제거
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+        }) //2.
 public class HelloControllerTest {
     @Autowired //3.
     private MockMvc mvc; //4.
 
     @Test
+    @WithMockUser(roles = "USER")
     public void hello가_리턴된다() throws Exception{
         String hello = "hello";
         mvc.perform(get("/hello")) //5.
@@ -26,6 +34,7 @@ public class HelloControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void helloDto가_리턴된다() throws Exception{
         String name = "hello";
         int amount = 1000;
